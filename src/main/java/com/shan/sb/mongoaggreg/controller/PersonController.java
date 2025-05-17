@@ -1,16 +1,16 @@
 package com.shan.sb.mongoaggreg.controller;
 
+import com.shan.sb.mongoaggreg.dto.CountryCount;
 import com.shan.sb.mongoaggreg.model.Person;
 import com.shan.sb.mongoaggreg.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/persons")
 public class PersonController {
+
     @Autowired
     private PersonService service;
 
@@ -30,7 +30,22 @@ public class PersonController {
     }
 
     @GetMapping("/group-by-country")
-    public List<Document> groupByCountry() {
+    public List<CountryCount> groupByCountry() {
         return service.groupByCountry();
+    }
+
+    @GetMapping("/all-tags")
+    public List<String> getAllTags() {
+        return service.getAllTags();
+    }
+
+    @GetMapping("/all-eye-colors")
+    public List<String> getAllEyeColors() {
+        return service.getAllEyeColors();
+    }
+
+    @GetMapping("/all-company-titles")
+    public List<String> getAllCompanyTitles() {
+        return service.getAllCompanyTitles();
     }
 }

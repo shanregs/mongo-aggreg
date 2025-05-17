@@ -1,0 +1,109 @@
+{
+  "info": {
+    "name": "MongoDB Persons API",
+    "_postman_id": "ef402ef6-c0de-4d1e-8b30-63ea36e7b994",
+    "description": "Test endpoints for MongoDB Spring Boot aggregation and queries",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Persons By Country",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/persons/country/India",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "country", "India"]
+        }
+      }
+    },
+    {
+      "name": "Get Persons By Age Range",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/persons/age-range?min=20&max=40",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "age-range"],
+          "query": [
+            { "key": "min", "value": "20" },
+            { "key": "max", "value": "40" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Sorted Persons By Age",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/persons/sorted-age",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "sorted-age"]
+        }
+      }
+    },
+    {
+      "name": "Group By Country (Top 5)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/persons/group-by-country",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "group-by-country"]
+        }
+      }
+    },
+    {
+      "name": "Get All Tags",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/persons/all-tags",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "all-tags"]
+        }
+      }
+    },
+    {
+      "name": "Get All Eye Colors",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/persons/all-eye-colors",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "all-eye-colors"]
+        }
+      }
+    },
+    {
+      "name": "Get All Company Titles",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/persons/all-company-titles",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "persons", "all-company-titles"]
+        }
+      }
+    }
+  ]
+}
