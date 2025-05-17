@@ -24,21 +24,46 @@ public class PersonServiceImpl implements PersonService{
         this.mongoTemplate = mongoTemplate;
     }
 
+    /**
+     db.persons.find({ "addresses.country": "India" })
+
+     * @param country
+     * @return
+     */
     @Override
     public List<Person> getByCountry(String country) {
         return personRepository.findByAddresses_Country(country);
     }
+
+    /**
+     db.persons.find({ age: { $gte: 20, $lte: 40 } })
+     * @param min
+     * @param max
+     * @return
+     */
 
     @Override
     public List<Person> getByAgeRange(int min, int max) {
         return personRepository.findByAgeBetween(min,max);
     }
 
+    /**
+     db.persons.find().sort({ age: 1 })
+     * @return
+     */
     @Override
     public List<Person> sortByAge() {
         return personRepository.findAll(Sort.by(Sort.Direction.ASC, "age"));
     }
 
+    /**
+    db.persons.aggregate([
+    { $unwind: "$addresses" },
+    { $group: { _id: "$addresses.country", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: 5 }
+    ])
+    */
     public List<CountryCount> groupByCountry() {
         Aggregation agg = newAggregation(
                 unwind("$addresses"),
@@ -49,6 +74,15 @@ public class PersonServiceImpl implements PersonService{
         return mongoTemplate.aggregate(agg, "persons", CountryCount.class).getMappedResults();
     }
 
+    /**
+     *
+      db.persons.aggregate([
+        { $unwind: "$tags" },
+        { $group: { _id: "$tags", count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+      ])
+     * @return
+     */
     @Override
     public List<String> getAllTags() {
         Aggregation agg = newAggregation(
@@ -60,6 +94,14 @@ public class PersonServiceImpl implements PersonService{
                 .getMappedResults().stream().map(d-> d.getString("_id")).toList();
     }
 
+
+    /**
+      db.persons.aggregate([
+        { $group: { _id: "$eyeColor", count: { $sum: 1 } } },
+        { $sort: { count: -1 } }
+      ])
+     * @return
+     */
     @Override
     public List<String> getAllEyeColors() {
         Aggregation agg = newAggregation(
@@ -70,6 +112,13 @@ public class PersonServiceImpl implements PersonService{
                 .getMappedResults().stream().map(d -> d.getString("_id")).toList();
     }
 
+    /**
+     db.persons.aggregate([
+     { $group: { _id: "$company.title", count: { $sum: 1 } } },
+     { $sort: { count: -1 } }
+     ])
+     * @return
+     */
     @Override
     public List<String> getAllCompanyTitles() {
         Aggregation agg = newAggregation(

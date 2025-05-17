@@ -1,0 +1,55 @@
+// 1. Find persons by country
+db.persons.find({ "addresses.country": "India" })
+
+// 2. Find persons by age range
+db.persons.find({ age: { $gte: 20, $lte: 40 } })
+
+// 3. Sort persons by age (ascending)
+db.persons.find().sort({ age: 1 })
+
+// 4. Group by country (top 5)
+db.persons.aggregate([
+  { $unwind: "$addresses" },
+  { $group: { _id: "$addresses.country", count: { $sum: 1 } } },
+  { $sort: { count: -1 } },
+  { $limit: 5 }
+])
+
+// 5. Get all unique tags (with frequency)
+db.persons.aggregate([
+  { $unwind: "$tags" },
+  { $group: { _id: "$tags", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+// 6. Get all eye colors
+db.persons.aggregate([
+  { $group: { _id: "$eyeColor", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+// 7. Get all company titles
+db.persons.aggregate([
+  { $group: { _id: "$company.title", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+// 8. Average age by country
+db.persons.aggregate([
+  { $unwind: "$addresses" },
+  { $group: { _id: "$addresses.country", averageAge: { $avg: "$age" } } },
+  { $sort: { averageAge: -1 } }
+])
+
+// 9. Most common favorite fruit
+db.persons.aggregate([
+  { $group: { _id: "$favoriteFruit", count: { $sum: 1 } } },
+  { $sort: { count: -1 } },
+  { $limit: 1 }
+])
+
+// 10. Count by active status (true/false)
+db.persons.aggregate([
+  { $group: { _id: "$isActive", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
